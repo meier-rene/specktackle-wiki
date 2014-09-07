@@ -9,6 +9,8 @@ Implemented charts exist for mass spectrometry, one- and two-dimensional NMR, UV
 ## Example
 * [MetaboLights](http://www.ebi.ac.uk/metabolights/MTBLC27570#nmrspectra)
 
+## ST viewer in MetaboLights
 ![SpeckTackle Viewer 1](figures/figure_2.png "ST viewer in MetaboLights")
 
+## ST viewer with annotations and tooltips
 ![SpeckTackle Viewer 2](figures/figure_3.png "ST viewer with annotations and tooltips")
