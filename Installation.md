@@ -10,7 +10,7 @@ referenced in the HTML website, the library can be used like any other JavaScrip
     <!-- SpeckTackle CSS containing chart stylings -->
     <link rel="stylesheet" type="text/css" href="css/st.css">
     <!-- SpeckTackle library -->
-    <script type="text/javascript", src="libs/st/st.js"></script>
+    <script type="text/javascript" src="libs/st/st.js"></script>
 <head>
 ```
 
