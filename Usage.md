@@ -18,7 +18,7 @@ As a general rule, all interaction between a chart and raw data is mediated thro
 which keeps track of added data series and their properties. Multiple data series (overlays) 
 are supported with the ability to highlight an individual data series via its legend key.
 
-For more complex examples than the code snippet listed below, please see the ***index.html*** website in
+For more complex examples than the code snippet listed below, please see the **index.html** website in
 the [home directory](https://bitbucket.org/sbeisken/specktackle/src) of the project, which contains 
 multiple examples for different chart types, data load/removal events, and annotations.
 
@@ -57,7 +57,7 @@ simplify data load and process data for visualisation, e.g. bin the data or assi
 individual data points. Data needs to be in JSON format and can be provided either via URLs pointing
 to a data source or directly as array.
 
-A 'set' is defined as having explicit x- and y-values in its JSON input.
+A 'set' is defined as having either explicit x- and y-values in its JSON input in pairs ...
 
 ```
 #!json
@@ -82,32 +82,17 @@ A 'set' is defined as having explicit x- and y-values in its JSON input.
    ]
 }
 ```
-
-An 'array' is defined as having either a single array of y-values, complemented by defined x-value start 
-and stop values, ...
-
 ```
-#!json
+#!js+cheetah
 
-{
-    "id":"NMR",
-    "xLabel": "ppm",
-    "yLabel": "Intensity",
-    "xMax": 10.8032,
-    "yMax": 4.187424E8,
-    "xMin": -1.21169,
-    "yMin": -2.8624496E7,
-    "data": [
-        -97423.0,
-        -105938.0,
-        -118276.0,
-        -124206.0,
-        -118488.0
-    ]
-}
+var handle = st.data          // new handler
+    .set()                    // of type set
+    .ylimits([0, 1000])       // y-domain limits
+    .x("peaks.mz")            // x-accessor
+    .y("peaks.intensity");    // y-accessor
 ```
 
-... or two arrays with x- and y-values.
+... or as two separate arrays with x- and y-values.
 
 ```
 #!json
@@ -130,6 +115,47 @@ and stop values, ...
     ]
 }
 ```
+```
+#!js+cheetah
+
+var set = st.data.set() 
+    .xlimits(["mzRangeStart", "mzRangeStop"])
+    .x("mzArray")             
+    .y("intenArray")      
+    .title("spectrumId");
+```
+
+An 'array' is defined by a single array of y-values, complemented by defined x-value start 
+and stop values.
+
+```
+#!json
+
+{
+    "id":"NMR",
+    "xLabel": "ppm",
+    "yLabel": "Intensity",
+    "xMax": 10.8032,
+    "yMax": 4.187424E8,
+    "xMin": -1.21169,
+    "yMin": -2.8624496E7,
+    "data": [
+        -97423.0,
+        -105938.0,
+        -118276.0,
+        -124206.0,
+        -118488.0
+    ]
+}
+```
+```
+#!js+cheetah
+
+var array = st.data.array()     // data type (array)
+    .xlimits(["xMin", "xMax"])
+    .ylimits(["yMin", "yMax"])
+    .y("data")                  // one dimensional array
+```
 
 ## Annotations
 Annotations and tooltips for data point selection events are supported through the concept of 
@@ -140,7 +166,7 @@ annotation types. Implemented annotation types encompass:
 
 Whereas textual annotations are simply drawn besides their target data points, 
 tooltip annotations are specified as key-value pairs: in the first case, the key-value 
-pairs are character strings that are displayed as list in the form '<key>: <value>'. 
+pairs are character strings that are displayed as list in the form '<key>:<value>'. 
 In the second case the value of each pair is treated as URL to a MDL Molfile, which 
 contains the molecular structure to be displayed, and resolved accordingly.
 
